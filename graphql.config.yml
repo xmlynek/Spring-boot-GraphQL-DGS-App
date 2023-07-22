@@ -1,0 +1,9 @@
+schema: schema.graphql
+projects:
+  products:
+    include:
+      - "./products/src/main/resources/schema/*.graphql"
+  sales:
+    include:
+      - "./sales/src/main/resources/schema/*.graphql"
+

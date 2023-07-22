@@ -1,0 +1,34 @@
+input ManufacturerInput {
+    name: String
+    originCountry: String
+    sortBy: [SortInput!]
+}
+
+input SeriesInput {
+    name: String
+    manufacturer: ManufacturerInput
+    sortBy: [SortInput!]
+}
+
+input ModelInput {
+    series: SeriesInput
+    name: String
+    exteriorColors: [String!]
+    transmission: Transmission
+    isAvailable: Boolean
+    sortBy: [SortInput!]
+}
+
+input NumericComparisonInput {
+    operator        : NumericComparison!
+    value           : Int!
+    """ Will be used only if operator is BETWEEN_INCLUSIVE """
+    highValue       : Int
+}
+
+input SortInput {
+    field: String!
+    direction: SortDirection!
+}
+
+

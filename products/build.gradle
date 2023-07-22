@@ -1,0 +1,17 @@
+dependencies {
+
+}
+generateJava {
+    packageName = 'com.course.graphql.generated'
+    generateClient = true
+    typeMapping = [
+            "Date": "java.time.LocalDate",
+            "DateTime": "java.time.LocalDateTime",
+            "NonNegativeInt": "java.lang.Integer",
+            "NonNegativeFloat": "java.lang.Double",
+            "PositiveFloat": "java.lang.Double",
+            "ManufacturerConnection": "graphql.relay.SimpleListConnection<Manufacturer>",
+            "SeriesConnection": "graphql.relay.SimpleListConnection<Series>",
+            "ModelConnection": "graphql.relay.Connection<com.example.products.datasource.entity.Model>"
+    ]
+}

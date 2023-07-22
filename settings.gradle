@@ -1,0 +1,3 @@
+rootProject.name = 'graphql-cars-project'
+include 'products'
+include 'sales'

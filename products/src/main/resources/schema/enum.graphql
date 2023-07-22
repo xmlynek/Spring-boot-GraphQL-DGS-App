@@ -1,0 +1,30 @@
+enum NumericComparison {
+    GREATER_THAN_EQUALS
+    LESS_THAN_EQUALS
+    BETWEEN_INCLUSIVE
+}
+
+enum Transmission {
+    AUTOMATIC
+    MANUAL
+}
+
+enum BodyType {
+    SEDAN
+    SUV
+    MPV
+    PICKUP
+    CROSSOVER
+}
+
+enum Fuel {
+    DIESEL
+    GAS
+    ELECTRIC
+    HYBRID
+}
+
+enum SortDirection {
+    ASCENDING
+    DESCENDING
+}

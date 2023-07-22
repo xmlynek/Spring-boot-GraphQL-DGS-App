@@ -1,0 +1,29 @@
+
+type Query {
+    manufacturers(manufacturerInput: ManufacturerInput): [Manufacturer]
+    series(seriesInput: SeriesInput): [Series]
+    models(modelInput: ModelInput, priceInput: NumericComparisonInput): [Model]
+
+    manufacturersPagination(
+        manufacturerInput: ManufacturerInput
+        first: Int
+        last: Int
+        after: String
+        before: String
+    ): ManufacturerConnection
+
+    seriesPagination(
+        seriesInput: SeriesInput
+        first: Int
+        last: Int
+        after: String
+        before: String
+    ): SeriesConnection
+
+    modelsPagination(
+        modelInput: ModelInput
+        priceInput: NumericComparisonInput
+        page:   Int
+        size:   Int
+    ): ModelPagination
+}

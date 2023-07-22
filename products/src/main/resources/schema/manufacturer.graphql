@@ -1,0 +1,8 @@
+type Manufacturer @connection {
+    uuid            : String!
+    name            : String!
+    originCountry   : String!
+    description     : String
+    series          : [Series!]
+}
+
