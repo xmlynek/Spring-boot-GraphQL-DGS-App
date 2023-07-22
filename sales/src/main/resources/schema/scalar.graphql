@@ -1,0 +1,11 @@
+scalar Date
+scalar DateTime
+scalar NonPositiveInt
+scalar NonPositiveFloat
+scalar NonNegativeInt
+scalar NonNegativeFloat
+scalar PositiveInt
+scalar PositiveFloat
+scalar NegativeInt
+scalar NegativeFloat
+scalar Long

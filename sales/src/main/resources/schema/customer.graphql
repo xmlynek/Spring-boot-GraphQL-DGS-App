@@ -1,0 +1,39 @@
+type Customer @connection {
+    uuid                : String!
+    fullName            : String!
+    birthDate           : Date!
+    phone               : String!
+    email               : String!
+    salesOrders         : [SalesOrder!]
+    addresses           : [Address!]
+}
+
+input CustomerCreateRequest {
+    fullName    : String!
+    birthDate   : Date!
+    phone       : String!
+    email       : String!
+    addresses   : [AddressCreateRequest!]
+}
+
+"""
+Used to find user. Fill one of these, not both.
+"""
+input CustomerUniqueInput {
+    uuid    : String
+    email   : String
+}
+
+type CustomerMutationResponse implements MutationResponse {
+    customerUuid    : String
+    message         : String
+    success         : Boolean!
+}
+
+type CustomerPagination {
+    customerConnection: CustomerConnection
+    page: Int!
+    size: Int!
+    totalPages: Int!
+    totalElement: Long!
+}

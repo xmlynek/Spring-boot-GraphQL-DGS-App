@@ -1,0 +1,33 @@
+plugins {
+    id "io.freefair.lombok" version "6.5.0-rc1"
+}
+
+compileJava {
+    options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    implementation "org.mapstruct:mapstruct:1.4.2.Final"
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
+}
+
+generateJava {
+    packageName = 'com.course.graphql.generated'
+    generateClient = true
+    typeMapping = [
+            "Date": "java.time.LocalDate",
+            "DateTime": "java.time.LocalDateTime",
+            "NonPositiveInt": "java.lang.Integer",
+            "NonPositiveFloat": "java.lang.Double",
+            "NonNegativeInt": "java.lang.Integer",
+            "NonNegativeFloat": "java.lang.Double",
+            "PositiveInt": "java.lang.Integer",
+            "PositiveFloat": "java.lang.Double",
+            "NegativeInt": "java.lang.Integer",
+            "NegativeFloat": "java.lang.Double",
+            "CustomerConnection": "graphql.relay.Connection<com.example.sales.datasource.entity.Customer>"
+    ]
+}
+
