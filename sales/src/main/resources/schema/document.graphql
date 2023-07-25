@@ -1,0 +1,14 @@
+type Document {
+    uuid            : String!
+    documentType    : DocumentType!
+    documentPath    : String!
+}
+
+enum DocumentType {
+    ID_CARD
+    PASSPORT
+    IMAGE
+    GENERAL_DOCUMENT
+    TAX_STATEMENT
+    OTHER
+}

@@ -7,7 +7,13 @@ type Mutation {
     customerCreate(customer: CustomerCreateRequest): CustomerMutationResponse!
 
     addressCreate(
-        customer: CustomerUniqueInput!
-        addresses: [AddressCreateRequest!]!
-    ) : CustomerMutationResponse!
+        customer    : CustomerUniqueInput!
+        addresses   : [AddressCreateRequest!]!
+    )   : CustomerMutationResponse!
+
+    documentCreate(
+        customer        : CustomerUniqueInput!
+        document        : Upload!
+        documentType    : DocumentType!
+    )   : CustomerMutationResponse!
 }

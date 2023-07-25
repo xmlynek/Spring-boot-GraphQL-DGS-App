@@ -6,7 +6,7 @@ type Address {
 }
 
 input AddressCreateRequest {
-    street  : String!
-    city    : String!
-    zipcode : String!
+    street  : String! @NotBlank @Size(min: 2, max: 50)
+    city    : String! @NotBlank @Size(min: 2, max: 50)
+    zipcode : String! @Pattern(regexp: "^[0-9]{4,7}$")
 }

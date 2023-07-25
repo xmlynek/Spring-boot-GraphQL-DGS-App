@@ -9,3 +9,4 @@ scalar PositiveFloat
 scalar NegativeInt
 scalar NegativeFloat
 scalar Long
+scalar Upload

@@ -1,45 +1,33 @@
 package com.example.sales.datasource.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.course.graphql.generated.types.DocumentType;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
-//@Entity
-//@Table(name = "customer_documents")
-//public class CustomerDocument {
-//
-//    @Id
-//    @GeneratedValue
-//    private UUID uuid;
-//
-//    private String documentType;
-//
-//    private String documentPath;
-//
-//    public UUID getUuid() {
-//        return uuid;
-//    }
-//
-//    public void setUuid(UUID uuid) {
-//        this.uuid = uuid;
-//    }
-//
-//    public String getDocumentType() {
-//        return documentType;
-//    }
-//
-//    public void setDocumentType(String documentType) {
-//        this.documentType = documentType;
-//    }
-//
-//    public String getDocumentPath() {
-//        return documentPath;
-//    }
-//
-//    public void setDocumentPath(String documentPath) {
-//        this.documentPath = documentPath;
-//    }
-//}
+@Entity
+@Table(name = "customer_documents")
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+public class CustomerDocument {
+
+    @Id
+    @GeneratedValue
+    private UUID uuid;
+
+    @Enumerated(EnumType.STRING)
+    private DocumentType documentType;
+
+    private String documentPath;
+
+    public String getUuid() {
+        return uuid.toString();
+    }
+
+}

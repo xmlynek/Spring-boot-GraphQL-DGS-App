@@ -3,7 +3,7 @@ package com.example.sales.resolver;
 import com.course.graphql.generated.DgsConstants;
 import com.course.graphql.generated.types.*;
 import com.example.sales.datasource.entity.Customer;
-import com.example.sales.datasource.mapper.CustomerMapper;
+import com.example.sales.mapper.CustomerMapper;
 import com.example.sales.service.command.CustomerCommandService;
 import com.example.sales.service.query.CustomerQueryService;
 import com.netflix.graphql.dgs.DgsComponent;
@@ -13,6 +13,7 @@ import com.netflix.graphql.dgs.exceptions.DgsEntityNotFoundException;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,6 +79,27 @@ public class CustomerResolver {
                 .customerUuid(String.valueOf(updatedCustomer.getUuid()))
                 .success(true)
                 .message(String.format("Addresses successfully created and added to user %s", updatedCustomer.getFullName()))
+                .build();
+    }
+
+    @DgsData(
+            parentType = DgsConstants.MUTATION.TYPE_NAME,
+            field = DgsConstants.MUTATION.DocumentCreate
+    )
+    public CustomerMutationResponse addDocumentToCustomer(@InputArgument CustomerUniqueInput customer,
+                                                          @InputArgument DocumentType documentType,
+                                                          DataFetchingEnvironment environment) {
+        var existingCustomer = customerQueryService.getUniqueCustomerFromInput(customer)
+                .orElseThrow(() -> new DgsEntityNotFoundException("Customer with given uuid or email not found"));
+
+        MultipartFile document = environment.getArgument(DgsConstants.MUTATION.DOCUMENTCREATE_INPUT_ARGUMENT.Document);
+
+        Customer updatedCustomer = customerCommandService.addDocumentToCustomer(existingCustomer, documentType, document);
+
+        return CustomerMutationResponse.newBuilder()
+                .customerUuid(String.valueOf(updatedCustomer.getUuid()))
+                .success(true)
+                .message(String.format("Document %s successfully uploaded", document.getOriginalFilename()))
                 .build();
     }
 

@@ -11,6 +11,8 @@ dependencies {
 
     implementation "org.mapstruct:mapstruct:1.4.2.Final"
     annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
+
+    implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-validation'
 }
 
 generateJava {
@@ -27,7 +29,8 @@ generateJava {
             "PositiveFloat": "java.lang.Double",
             "NegativeInt": "java.lang.Integer",
             "NegativeFloat": "java.lang.Double",
-            "CustomerConnection": "graphql.relay.Connection<com.example.sales.datasource.entity.Customer>"
+            "CustomerConnection": "graphql.relay.Connection<com.example.sales.datasource.entity.Customer>",
+            "Upload": "org.springframework.web.multipart.MultipartFile"
     ]
 }
 

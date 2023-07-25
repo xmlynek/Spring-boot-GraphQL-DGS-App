@@ -1,4 +1,4 @@
-package com.example.sales.datasource.mapper;
+package com.example.sales.mapper;
 
 import com.course.graphql.generated.types.CustomerCreateRequest;
 import com.example.sales.datasource.entity.Customer;
@@ -12,5 +12,6 @@ public interface CustomerMapper {
 
     @Mapping(target = "uuid", ignore = true)
     @Mapping(target = "salesOrders", ignore = true)
+    @Mapping(target = "documents", ignore = true)
     Customer customerRequestToEntity(CustomerCreateRequest createRequest);
 }

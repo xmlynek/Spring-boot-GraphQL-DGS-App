@@ -1,4 +1,4 @@
-package com.example.sales.datasource.mapper;
+package com.example.sales.mapper;
 
 import com.course.graphql.generated.types.AddressCreateRequest;
 import com.example.sales.datasource.entity.Address;

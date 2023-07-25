@@ -41,11 +41,11 @@ public class Customer {
     @Fetch(FetchMode.SUBSELECT)
     private List<Address> addresses;
 
-//    @OneToMany
-//    @JoinColumn(name = "customer_uuid")
-//    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-//    @Fetch(FetchMode.SUBSELECT)
-//    private List<CustomerDocument> documents;
+    @OneToMany
+    @JoinColumn(name = "customer_uuid")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
+    private List<CustomerDocument> documents;
 
     @OneToMany(mappedBy = "customer")
     @BatchSize(size = 50)

@@ -6,13 +6,14 @@ type Customer @connection {
     email               : String!
     salesOrders         : [SalesOrder!]
     addresses           : [Address!]
+    documents           : [Document!]
 }
 
 input CustomerCreateRequest {
-    fullName    : String!
+    fullName    : String! @NotBlank @Pattern(regexp: "^[A-Za-z ]{5,50}$")
     birthDate   : Date!
-    phone       : String!
-    email       : String!
+    phone       : String! @Pattern(regexp: "^[0-9]{5,15}$")
+    email       : String! @Pattern(regexp: "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
     addresses   : [AddressCreateRequest!]
 }
 
@@ -20,8 +21,8 @@ input CustomerCreateRequest {
 Used to find user. Fill one of these, not both.
 """
 input CustomerUniqueInput {
-    uuid    : String
-    email   : String
+    uuid    : String @Pattern(regexp: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+    email   : String @Pattern(regexp: "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
 }
 
 type CustomerMutationResponse implements MutationResponse {
