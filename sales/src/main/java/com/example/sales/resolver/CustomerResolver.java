@@ -37,9 +37,11 @@ public class CustomerResolver {
                                           @InputArgument Integer size) {
         var customersPage = customerQueryService.findCustomers(customer, page, size);
 
-        // TODO: map customers to graphqlEntity
+        var listCustomersQL = customersPage.stream()
+                .map(customerMapper::entityToCustomerGraphQl)
+                .toList();
 
-        var customerConnection = new SimpleListConnection<>(customersPage.getContent()).get(env);
+        var customerConnection = new SimpleListConnection<>(listCustomersQL).get(env);
 
         return CustomerPagination.newBuilder()
                 .customerConnection(customerConnection)

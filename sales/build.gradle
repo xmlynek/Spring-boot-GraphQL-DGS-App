@@ -29,7 +29,7 @@ generateJava {
             "PositiveFloat": "java.lang.Double",
             "NegativeInt": "java.lang.Integer",
             "NegativeFloat": "java.lang.Double",
-            "CustomerConnection": "graphql.relay.Connection<com.example.sales.datasource.entity.Customer>",
+            "CustomerConnection": "graphql.relay.Connection<com.course.graphql.generated.types.Customer>",
             "Upload": "org.springframework.web.multipart.MultipartFile"
     ]
 }

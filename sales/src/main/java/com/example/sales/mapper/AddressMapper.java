@@ -5,7 +5,7 @@ import com.example.sales.datasource.entity.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = { HelperMapper.class })
 public interface AddressMapper {
 
     @Mapping(target = "uuid", ignore = true)
