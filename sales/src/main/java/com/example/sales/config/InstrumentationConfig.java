@@ -31,9 +31,9 @@ public class InstrumentationConfig {
         };
     }
 
-    private BiFunction<FieldAndArguments, FieldValidationEnvironment, Optional<GraphQLError>> emailMustNotBeGmail() {
+    private BiFunction<FieldAndArguments, FieldValidationEnvironment, Optional<GraphQLError>> emailMustNotBeGmail(String argumentName) {
         return (fieldAndArguments, fieldValidationEnvironment) -> {
-            Map<String, Object> argCustomer = fieldAndArguments.getArgumentValue(DgsConstants.MUTATION.CUSTOMERCREATE_INPUT_ARGUMENT.Customer);
+            Map<String, Object> argCustomer = fieldAndArguments.getArgumentValue(argumentName);
             var email = (String) argCustomer.get(DgsConstants.CUSTOMERCREATEREQUEST.Email);
 
             return StringUtils.containsIgnoreCase(email, "gmail.com") ?
@@ -59,6 +59,21 @@ public class InstrumentationConfig {
         };
     }
 
+    private BiFunction<FieldAndArguments, FieldValidationEnvironment, Optional<GraphQLError>> customerUpdateRequestValidation() {
+        return (fieldAndArguments, fieldValidationEnvironment) -> {
+            Map<String, Object> argCustomerRequest = fieldAndArguments.getArgumentValue(DgsConstants.MUTATION.CUSTOMERUPDATE_INPUT_ARGUMENT.CustomerUpdate);
+
+            var email = (String) argCustomerRequest.get(DgsConstants.CUSTOMERUPDATEREQUEST.Email);
+            var phone = (String) argCustomerRequest.get(DgsConstants.CUSTOMERUPDATEREQUEST.Phone);
+
+            if (StringUtils.isAllBlank(email, phone)) {
+                return Optional.of(fieldValidationEnvironment.mkError("One of the customer phone or email must exist in CustomerUpdateRequest!"));
+            }
+
+            return Optional.empty();
+        };
+    }
+
 
     @Bean
     public Instrumentation ageValidationInstrumentation() {
@@ -75,7 +90,7 @@ public class InstrumentationConfig {
         ResultPath path = ResultPath.parse("/" + DgsConstants.MUTATION.CustomerCreate);
         SimpleFieldValidation fieldValidation = new SimpleFieldValidation();
 
-        fieldValidation.addRule(path, emailMustNotBeGmail());
+        fieldValidation.addRule(path, emailMustNotBeGmail(DgsConstants.MUTATION.CUSTOMERCREATE_INPUT_ARGUMENT.Customer));
 
         return new FieldValidationInstrumentation(fieldValidation);
     }
@@ -91,5 +106,17 @@ public class InstrumentationConfig {
         simpleFieldValidation.addRule(addressCreatePath, customerUniqueInputValidation(DgsConstants.MUTATION.ADDRESSCREATE_INPUT_ARGUMENT.Customer));
 
         return new FieldValidationInstrumentation(simpleFieldValidation);
+    }
+
+    @Bean
+    public Instrumentation customerUpdateRequestValidationInstrumentation() {
+        ResultPath path = ResultPath.parse("/" + DgsConstants.MUTATION.CustomerUpdate);
+
+        SimpleFieldValidation fieldValidation = new SimpleFieldValidation();
+
+        fieldValidation.addRule(path, customerUpdateRequestValidation());
+        fieldValidation.addRule(path, emailMustNotBeGmail(DgsConstants.MUTATION.CUSTOMERUPDATE_INPUT_ARGUMENT.CustomerUpdate));
+
+        return new FieldValidationInstrumentation(fieldValidation);
     }
 }

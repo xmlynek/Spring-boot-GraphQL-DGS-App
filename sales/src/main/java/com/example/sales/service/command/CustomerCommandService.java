@@ -2,6 +2,7 @@ package com.example.sales.service.command;
 
 import com.course.graphql.generated.types.AddressCreateRequest;
 import com.course.graphql.generated.types.CustomerCreateRequest;
+import com.course.graphql.generated.types.CustomerUpdateRequest;
 import com.course.graphql.generated.types.DocumentType;
 import com.example.sales.datasource.entity.Address;
 import com.example.sales.datasource.entity.Customer;
@@ -11,6 +12,7 @@ import com.example.sales.mapper.CustomerMapper;
 import com.example.sales.datasource.repository.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,6 +55,17 @@ public class CustomerCommandService {
         customerDocument.setDocumentPath(uploadedDocumentPath);
 
         customer.getDocuments().add(customerDocument);
+        return customerRepository.save(customer);
+    }
+
+    public Customer updateCustomer(Customer customer, CustomerUpdateRequest updateRequest) {
+        if (StringUtils.isNotBlank(updateRequest.getEmail())) {
+            customer.setEmail(updateRequest.getEmail());
+        }
+        if (StringUtils.isNotBlank(updateRequest.getPhone())) {
+            customer.setPhone(updateRequest.getPhone());
+        }
+
         return customerRepository.save(customer);
     }
 }

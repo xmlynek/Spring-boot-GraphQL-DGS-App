@@ -105,4 +105,22 @@ public class CustomerResolver {
                 .build();
     }
 
+    @DgsData(
+            parentType = DgsConstants.MUTATION.TYPE_NAME,
+            field = DgsConstants.MUTATION.CustomerUpdate
+    )
+    public CustomerMutationResponse updateCustomer(@InputArgument CustomerUniqueInput customer,
+                                                   @InputArgument CustomerUpdateRequest customerUpdate) {
+        var existingCustomer = customerQueryService.getUniqueCustomerFromInput(customer)
+                .orElseThrow(() -> new DgsEntityNotFoundException("Customer with given uuid or email not found"));
+
+        var updatedCustomer = customerCommandService.updateCustomer(existingCustomer, customerUpdate);
+
+        return CustomerMutationResponse.newBuilder()
+                .customerUuid(String.valueOf(updatedCustomer.getUuid()))
+                .success(true)
+                .message(String.format("Customer %s successfully updated!", updatedCustomer.getFullName()))
+                .build();
+    }
+
 }

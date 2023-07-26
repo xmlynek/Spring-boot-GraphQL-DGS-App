@@ -38,3 +38,8 @@ type CustomerPagination {
     totalPages: Int!
     totalElement: Long!
 }
+
+input CustomerUpdateRequest {
+    email: String @Pattern(regexp: "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
+    phone: String @Pattern(regexp: "^[0-9]{5,15}$")
+}

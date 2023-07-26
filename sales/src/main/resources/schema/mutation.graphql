@@ -4,16 +4,23 @@ interface MutationResponse {
 }
 
 type Mutation {
-    customerCreate(customer: CustomerCreateRequest): CustomerMutationResponse!
+    customerCreate(
+        customer        : CustomerCreateRequest
+    )   : CustomerMutationResponse!
 
     addressCreate(
-        customer    : CustomerUniqueInput!
-        addresses   : [AddressCreateRequest!]!
+        customer        : CustomerUniqueInput!
+        addresses       : [AddressCreateRequest!]!
     )   : CustomerMutationResponse!
 
     documentCreate(
         customer        : CustomerUniqueInput!
         document        : Upload!
         documentType    : DocumentType!
+    )   : CustomerMutationResponse!
+
+    customerUpdate(
+        customer        : CustomerUniqueInput!
+        customerUpdate  : CustomerUpdateRequest!
     )   : CustomerMutationResponse!
 }
