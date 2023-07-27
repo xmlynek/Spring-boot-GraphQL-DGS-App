@@ -1,0 +1,11 @@
+type ModelSimple {
+    uuid            : String!
+    name            : String!
+    onTheRoadPrice  : PositiveFloat
+    transmission    : String
+    exteriorColor   : String
+    interiorColor   : String
+    releaseYear     : Int
+    bodyType        : String
+    fuel            : String
+}

@@ -3,6 +3,7 @@ type SalesOrderItem {
     quantity            : PositiveInt!
     notes               : String
     modelUuid           : String!
+    modelDetail         : ModelSimple
 }
 
 input SalesOrderItemInput {

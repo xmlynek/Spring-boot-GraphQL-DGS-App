@@ -1,18 +1,14 @@
 package com.example.products.service;
 
-import com.course.graphql.generated.types.ManufacturerInput;
-import com.course.graphql.generated.types.ModelInput;
-import com.course.graphql.generated.types.NumericComparisonInput;
-import com.course.graphql.generated.types.SeriesInput;
+import com.course.graphql.generated.types.*;
 import com.example.products.datasource.entity.Model;
 import com.example.products.datasource.repository.ModelRepository;
 import com.example.products.datasource.specification.ModelSpecification;
-import com.example.products.datasource.specification.SeriesSpecification;
+import com.example.products.mapper.ModelMapper;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -20,12 +16,15 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class ModelQueryService {
 
     private final ModelRepository modelRepository;
+
+    private final ModelMapper modelMapper;
 
     public List<Model> findModels(Optional<ModelInput> input, Optional<NumericComparisonInput> numericComparisonInput) {
         var modelInput = input.orElse(new ModelInput());
@@ -56,6 +55,12 @@ public class ModelQueryService {
         );
 
         return modelRepository.findAll(modelSpecification.and(priceSpecification), pagination);
+    }
+
+    public List<ModelSimple> findSimpleModels(List<String> modelUuids) {
+        var models = modelRepository.findAllById(modelUuids.stream().map(UUID::fromString).toList());
+
+        return models.stream().map(modelMapper::modelEntityToSimpleModel).toList();
     }
 
     private Specification<Model> modelSpecificationFromInput(ModelInput modelInput) {

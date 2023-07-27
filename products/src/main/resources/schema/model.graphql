@@ -23,7 +23,19 @@ type ModelPagination {
     modelConnection : ModelConnection
     page            : Int!
     size            : Int!
-    totalPages       : Int!
-    totalElements    : Long!
+    totalPages      : Int!
+    totalElements   : Long!
+}
+
+type ModelSimple {
+    uuid                : String!
+    name                : String!
+    onTheRoadPrice      : PositiveFloat
+    exteriorColor       : String
+    interiorColor       : String
+    releaseYear         : Int
+    transmission        : Transmission
+    bodyType            : BodyType
+    fuel                : Fuel
 }
 

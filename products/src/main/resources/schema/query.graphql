@@ -26,4 +26,8 @@ type Query {
         page:   Int
         size:   Int
     ): ModelPagination
+
+    simpleModels(
+        modelUuids:  [String!]!
+    ): [ModelSimple]
 }

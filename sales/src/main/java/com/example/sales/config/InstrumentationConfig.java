@@ -48,13 +48,15 @@ public class InstrumentationConfig {
         return (fieldAndArguments, fieldValidationEnvironment) -> {
             Map<String, Object> argCustomer = fieldAndArguments.getArgumentValue(argumentName);
 
-            var email = (String) argCustomer.get(DgsConstants.CUSTOMERUNIQUEINPUT.Email);
-            var uuid = (String) argCustomer.get(DgsConstants.CUSTOMERUNIQUEINPUT.Uuid);
+            if (argCustomer != null) {
+                var email = (String) argCustomer.get(DgsConstants.CUSTOMERUNIQUEINPUT.Email);
+                var uuid = (String) argCustomer.get(DgsConstants.CUSTOMERUNIQUEINPUT.Uuid);
 
-            if (StringUtils.isAllBlank(email, uuid)) {
-                return Optional.of(fieldValidationEnvironment.mkError("One of the customer UUID or email must exist"));
-            } else if (StringUtils.isNoneBlank(email, uuid)) {
-                return Optional.of(fieldValidationEnvironment.mkError("Only one parameter in CustomerUniqueInput is allowed, not both"));
+                if (StringUtils.isAllBlank(email, uuid)) {
+                    return Optional.of(fieldValidationEnvironment.mkError("One of the customer UUID or email must exist"));
+                } else if (StringUtils.isNoneBlank(email, uuid)) {
+                    return Optional.of(fieldValidationEnvironment.mkError("Only one parameter in CustomerUniqueInput is allowed, not both"));
+                }
             }
 
             return Optional.empty();
@@ -65,11 +67,13 @@ public class InstrumentationConfig {
         return (fieldAndArguments, fieldValidationEnvironment) -> {
             Map<String, Object> argCustomerRequest = fieldAndArguments.getArgumentValue(DgsConstants.MUTATION.CUSTOMERUPDATE_INPUT_ARGUMENT.CustomerUpdate);
 
-            var email = (String) argCustomerRequest.get(DgsConstants.CUSTOMERUPDATEREQUEST.Email);
-            var phone = (String) argCustomerRequest.get(DgsConstants.CUSTOMERUPDATEREQUEST.Phone);
+            if (argCustomerRequest != null) {
+                var email = (String) argCustomerRequest.get(DgsConstants.CUSTOMERUPDATEREQUEST.Email);
+                var phone = (String) argCustomerRequest.get(DgsConstants.CUSTOMERUPDATEREQUEST.Phone);
 
-            if (StringUtils.isAllBlank(email, phone)) {
-                return Optional.of(fieldValidationEnvironment.mkError("One of the customer phone or email must exist in CustomerUpdateRequest!"));
+                if (StringUtils.isAllBlank(email, phone)) {
+                    return Optional.of(fieldValidationEnvironment.mkError("One of the customer phone or email must exist in CustomerUpdateRequest!"));
+                }
             }
 
             return Optional.empty();

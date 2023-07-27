@@ -3,13 +3,13 @@ package com.example.products.resolver;
 import com.course.graphql.generated.DgsConstants;
 import com.course.graphql.generated.types.ModelInput;
 import com.course.graphql.generated.types.ModelPagination;
+import com.course.graphql.generated.types.ModelSimple;
 import com.course.graphql.generated.types.NumericComparisonInput;
 import com.example.products.datasource.entity.Model;
 import com.example.products.service.ModelQueryService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.InputArgument;
-import graphql.relay.Connection;
 import graphql.relay.SimpleListConnection;
 import graphql.schema.DataFetchingEnvironment;
 import lombok.AllArgsConstructor;
@@ -57,5 +57,13 @@ public class ModelResolver {
                 .totalElements(modelsPage.getTotalElements())
                 .totalPages(modelsPage.getTotalPages())
                 .build();
+    }
+
+    @DgsData(
+            parentType = DgsConstants.QUERY_TYPE,
+            field = DgsConstants.QUERY.SimpleModels
+    )
+    public List<ModelSimple> simpleModels(@InputArgument List<String> modelUuids) {
+        return modelQueryService.findSimpleModels(modelUuids);
     }
 }

@@ -6,6 +6,7 @@ import com.example.sales.datasource.entity.Customer;
 import com.example.sales.mapper.CustomerMapper;
 import com.example.sales.service.command.CustomerCommandService;
 import com.example.sales.service.query.CustomerQueryService;
+import com.example.sales.service.query.ProductQueryService;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import com.netflix.graphql.dgs.InputArgument;
@@ -16,7 +17,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @DgsComponent
 @AllArgsConstructor
@@ -24,6 +27,7 @@ public class CustomerResolver {
 
     private final CustomerQueryService customerQueryService;
     private final CustomerCommandService customerCommandService;
+    private final ProductQueryService productQueryService;
 
     private final CustomerMapper customerMapper;
 
@@ -40,6 +44,21 @@ public class CustomerResolver {
         var listCustomersQL = customersPage.stream()
                 .map(customerMapper::entityToCustomerGraphQl)
                 .toList();
+
+
+        // N + 1 problem
+        List<SalesOrderItem> allSalesOrderItems = listCustomersQL.stream()
+                .flatMap(c -> c.getSalesOrders().stream())
+                .flatMap(salesOrder -> salesOrder.getSalesOrderItems().stream())
+                .toList();
+
+        for (SalesOrderItem salesOrderItem : allSalesOrderItems) {
+            Map<String, ModelSimple> simpleModel = productQueryService.loadSimpleModels(
+                    Set.of(salesOrderItem.getModelUuid())
+            );
+            salesOrderItem.setModelDetail(simpleModel.get(salesOrderItem.getModelUuid()));
+        }
+
 
         var customerConnection = new SimpleListConnection<>(listCustomersQL).get(env);
 

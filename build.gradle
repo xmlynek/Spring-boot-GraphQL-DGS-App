@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '3.1.1' apply false
     id 'io.spring.dependency-management' version '1.1.0' apply false
     id 'com.netflix.dgs.codegen' version '5.6.6' apply false
+    id "io.freefair.lombok" version "8.1.0" apply false
 }
 
 allprojects {
@@ -14,11 +15,16 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
     apply plugin: "com.netflix.dgs.codegen"
     apply plugin: "org.springframework.boot"
+    apply plugin: "io.freefair.lombok"
 
     sourceCompatibility = 17
 
     repositories {
         mavenCentral()
+    }
+
+    compileJava {
+        options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
     }
 
     test {
@@ -27,7 +33,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom 'com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:6.0.0'
+            mavenBom 'com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:7.3.4'
         }
     }
 
@@ -47,5 +53,9 @@ subprojects {
         implementation 'com.netflix.graphql.dgs:graphql-dgs-spring-boot-starter'
         implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-scalars'
         implementation 'com.netflix.graphql.dgs:graphql-dgs-pagination'
+
+        implementation "org.mapstruct:mapstruct:1.5.5.Final"
+        annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
+        implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
     }
 }

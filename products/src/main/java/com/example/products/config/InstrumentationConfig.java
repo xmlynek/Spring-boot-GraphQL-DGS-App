@@ -12,12 +12,12 @@ public class InstrumentationConfig {
 
     @Bean
     public Instrumentation maxQueryComplexityInstrumentation() {
-        return new MaxQueryComplexityInstrumentation(20);
+        return new MaxQueryComplexityInstrumentation(100);
     }
 
     @Bean
     public Instrumentation maxQueryDepthInstrumentation() {
-        return new MaxQueryDepthInstrumentation(5);
+        return new MaxQueryDepthInstrumentation(15);
     }
 
     @Bean

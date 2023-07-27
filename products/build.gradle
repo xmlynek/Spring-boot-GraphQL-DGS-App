@@ -1,6 +1,3 @@
-dependencies {
-
-}
 generateJava {
     packageName = 'com.course.graphql.generated'
     generateClient = true
