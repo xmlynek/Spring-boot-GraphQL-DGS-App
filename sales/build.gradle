@@ -1,5 +1,5 @@
 plugins {
-    id "io.freefair.lombok" version "6.5.0-rc1"
+    id "io.freefair.lombok" version "8.1.0"
 }
 
 compileJava {
@@ -7,10 +7,9 @@ compileJava {
 }
 
 dependencies {
+    implementation "org.mapstruct:mapstruct:1.5.5.Final"
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-
-    implementation "org.mapstruct:mapstruct:1.4.2.Final"
-    annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
 
     implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-validation'
 }
@@ -20,7 +19,7 @@ generateJava {
     generateClient = true
     typeMapping = [
             "Date": "java.time.LocalDate",
-            "DateTime": "java.time.LocalDateTime",
+            "DateTime": "java.time.ZonedDateTime",
             "NonPositiveInt": "java.lang.Integer",
             "NonPositiveFloat": "java.lang.Double",
             "NonNegativeInt": "java.lang.Integer",

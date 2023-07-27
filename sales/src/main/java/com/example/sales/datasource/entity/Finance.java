@@ -37,4 +37,20 @@ public class Finance {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Loan loan;
 
+    public void setIsLoan(boolean isLoan) {
+        this.isLoan = isLoan;
+    }
+
+    public void setLoan(Loan loan) {
+        this.loan = loan;
+    }
+
+    public boolean getIsLoan() {
+        return this.isLoan;
+    }
+
+    public Loan getLoan() {
+        return this.loan;
+    }
+
 }

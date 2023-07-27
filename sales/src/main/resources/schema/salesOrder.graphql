@@ -5,3 +5,17 @@ type SalesOrder {
     salesOrderItems     : [SalesOrderItem!]!
     finance             : Finance!
 }
+
+input CreateSalesOrderInput {
+    customerUuid    : String!   @NotBlank @Pattern(regexp:"^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")
+    salesOrderItems : [SalesOrderItemInput!]!
+    finance         : FinanceInput!
+}
+
+type SalesOrderMutationResponse implements MutationResponse {
+    success         : Boolean!
+    message         : String
+    customerUuid    : String
+    salesOrderUuid  : String
+    orderNumber     : String
+}

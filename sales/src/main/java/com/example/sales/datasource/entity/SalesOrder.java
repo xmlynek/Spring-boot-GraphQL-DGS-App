@@ -46,12 +46,4 @@ public class SalesOrder {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Finance finance;
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
 }

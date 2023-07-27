@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(
-        uses = { AddressMapper.class, DocumentMapper.class, HelperMapper.class }
+        uses = { AddressMapper.class, DocumentMapper.class, HelperMapper.class, SalesOrderMapper.class }
 )
 public interface CustomerMapper {
 
@@ -15,7 +15,5 @@ public interface CustomerMapper {
     @Mapping(target = "documents", ignore = true)
     Customer customerRequestToEntity(CustomerCreateRequest createRequest);
 
-
-    @Mapping(target = "salesOrders", ignore = true) // TODO: remove once implemented SalesOrderMapper
     com.course.graphql.generated.types.Customer entityToCustomerGraphQl(Customer customer);
 }

@@ -5,7 +5,7 @@ interface MutationResponse {
 
 type Mutation {
     customerCreate(
-        customer        : CustomerCreateRequest
+        customer        : CustomerCreateRequest!
     )   : CustomerMutationResponse!
 
     addressCreate(
@@ -23,4 +23,8 @@ type Mutation {
         customer        : CustomerUniqueInput!
         customerUpdate  : CustomerUpdateRequest!
     )   : CustomerMutationResponse!
+
+    salesOrderCreate(
+        salesOrder      : CreateSalesOrderInput!
+    )   : SalesOrderMutationResponse!
 }

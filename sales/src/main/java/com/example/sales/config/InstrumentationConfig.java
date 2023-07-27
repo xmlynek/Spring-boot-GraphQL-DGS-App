@@ -1,7 +1,9 @@
 package com.example.sales.config;
 
 import com.course.graphql.generated.DgsConstants;
+import com.course.graphql.generated.types.LoanInput;
 import graphql.GraphQLError;
+import graphql.analysis.MaxQueryDepthInstrumentation;
 import graphql.execution.ResultPath;
 import graphql.execution.instrumentation.Instrumentation;
 import graphql.execution.instrumentation.fieldvalidation.*;
@@ -74,6 +76,23 @@ public class InstrumentationConfig {
         };
     }
 
+    private BiFunction<FieldAndArguments, FieldValidationEnvironment, Optional<GraphQLError>> requestContainsLoanWhenIsLoanValidation() {
+        return (fieldAndArguments, fieldValidationEnvironment) -> {
+            Map<String, Object> salesOrderArgs = fieldAndArguments.getArgumentValue(DgsConstants.MUTATION.SALESORDERCREATE_INPUT_ARGUMENT.SalesOrder);
+            Map<String, Object> financeArgs = (Map<String, Object>) salesOrderArgs.get(DgsConstants.CREATESALESORDERINPUT.Finance);
+
+            var isLoan = (boolean) financeArgs.get(DgsConstants.FINANCEINPUT.IsLoan);
+            var loanArgs = financeArgs.get(DgsConstants.FINANCEINPUT.Loan);
+
+            if (isLoan && loanArgs == null) {
+                return Optional.of(fieldValidationEnvironment.mkError("Loan must not be null when 'isLoan' is true!"));
+            } else if (!isLoan && loanArgs != null) {
+                return Optional.of(fieldValidationEnvironment.mkError("Loan request should not exist when 'isLoan' is false!"));
+            }
+
+            return Optional.empty();
+        };
+    }
 
     @Bean
     public Instrumentation ageValidationInstrumentation() {
@@ -116,6 +135,17 @@ public class InstrumentationConfig {
 
         fieldValidation.addRule(path, customerUpdateRequestValidation());
         fieldValidation.addRule(path, emailMustNotBeGmail(DgsConstants.MUTATION.CUSTOMERUPDATE_INPUT_ARGUMENT.CustomerUpdate));
+
+        return new FieldValidationInstrumentation(fieldValidation);
+    }
+
+    @Bean
+    public Instrumentation loanValidationInstrumentation() {
+        ResultPath path = ResultPath.parse("/" + DgsConstants.MUTATION.SalesOrderCreate);
+
+        SimpleFieldValidation fieldValidation = new SimpleFieldValidation();
+
+        fieldValidation.addRule(path, requestContainsLoanWhenIsLoanValidation());
 
         return new FieldValidationInstrumentation(fieldValidation);
     }

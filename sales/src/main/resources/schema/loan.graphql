@@ -5,3 +5,10 @@ type Loan {
     contactPersonPhone  : String!
     contactPersonEmail  : String!
 }
+
+input LoanInput {
+    financeCompany      : String!   @NotBlank @Size(min: 3, max: 50)
+    contactPersonName   : String!   @NotBlank @Pattern(regexp: "^[A-Za-z ]{5,50}$")
+    contactPersonPhone  : String!   @NotBlank @Pattern(regexp: "^[0-9]{5,20}$")
+    contactPersonEmail  : String!   @NotBlank @Pattern(regexp: "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
+}
