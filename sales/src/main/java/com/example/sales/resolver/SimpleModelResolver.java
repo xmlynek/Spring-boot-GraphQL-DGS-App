@@ -4,6 +4,7 @@ import com.course.graphql.generated.DgsConstants;
 import com.course.graphql.generated.types.ModelSimple;
 import com.course.graphql.generated.types.SalesOrderItem;
 import com.example.sales.contants.DataLoaderConstants;
+import com.example.sales.dataloader.SimpleModelRestDataLoader;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsData;
 import graphql.schema.DataFetchingEnvironment;
@@ -19,7 +20,8 @@ public class SimpleModelResolver {
             field = DgsConstants.SALESORDERITEM.ModelDetail
     )
     public CompletableFuture<ModelSimple> loadSimpleModels(DataFetchingEnvironment env) {
-        DataLoader<String, ModelSimple> simpleModelDataLoader = env.getDataLoader(DataLoaderConstants.SIMPLE_MODEL_DATA_LOADER_NAME);
+//        DataLoader<String, ModelSimple> simpleModelDataLoader = env.getDataLoader(DataLoaderConstants.SIMPLE_MODEL_DATA_LOADER_NAME);
+        DataLoader<String, ModelSimple> simpleModelDataLoader = env.getDataLoader("simpleModelRestDataLoader");
         SalesOrderItem salesOrderItem = env.getSource();
 
         return simpleModelDataLoader.load(salesOrderItem.getModelUuid());

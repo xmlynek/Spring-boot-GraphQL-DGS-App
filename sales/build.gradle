@@ -1,5 +1,6 @@
 dependencies {
     implementation 'com.netflix.graphql.dgs:graphql-dgs-extended-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }
 
 generateJava {

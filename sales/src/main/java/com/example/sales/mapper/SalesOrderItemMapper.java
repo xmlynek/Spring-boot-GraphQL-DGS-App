@@ -12,5 +12,6 @@ public interface SalesOrderItemMapper {
     SalesOrderItem salesOrderItemInputToEntity(SalesOrderItemInput salesOrderItemInput);
 
     @Mapping(target = "notes", ignore = true)
+    @Mapping(target = "modelDetail", ignore = true)
     com.course.graphql.generated.types.SalesOrderItem salesOrderItemToGraphQL(SalesOrderItem salesOrderItem);
 }
