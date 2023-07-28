@@ -21,7 +21,7 @@ public class SimpleModelResolver {
     )
     public CompletableFuture<ModelSimple> loadSimpleModels(DataFetchingEnvironment env) {
 //        DataLoader<String, ModelSimple> simpleModelDataLoader = env.getDataLoader(DataLoaderConstants.SIMPLE_MODEL_DATA_LOADER_NAME);
-        DataLoader<String, ModelSimple> simpleModelDataLoader = env.getDataLoader("simpleModelRestDataLoader");
+        DataLoader<String, ModelSimple> simpleModelDataLoader = env.getDataLoader(DataLoaderConstants.SIMPLE_MODEL_REST_DATA_LOADER_NAME);
         SalesOrderItem salesOrderItem = env.getSource();
 
         return simpleModelDataLoader.load(salesOrderItem.getModelUuid());
