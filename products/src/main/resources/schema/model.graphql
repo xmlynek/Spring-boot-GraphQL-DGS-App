@@ -1,4 +1,4 @@
-type Model @connection {
+type Model @connection @key(fields: "uuid") {
     uuid            : String!
     name            : String
     onTheRoadPrice  : PositiveFloat!

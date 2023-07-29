@@ -1,11 +1,16 @@
+type Model @key(fields: "uuid") @extends {
+    uuid: String @external
+    salesPercentage: NonNegativeFloat
+}
+
 type ModelSimple {
     uuid            : String!
     name            : String!
     onTheRoadPrice  : PositiveFloat
-    transmission    : String
+    transmission    : Transmission
     exteriorColor   : String
     interiorColor   : String
     releaseYear     : Int
-    bodyType        : String
-    fuel            : String
+    bodyType        : BodyType
+    fuel            : Fuel
 }

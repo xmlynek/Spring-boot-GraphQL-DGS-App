@@ -1,0 +1,13 @@
+{
+  "name": "apollo-gw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": " node index.js"
+  },
+  "dependencies": {
+    "@apollo/gateway": "^2.5.1",
+    "@apollo/server": "^4.9.0",
+    "graphql": "^16.7.1"
+  }
+}
