@@ -23,6 +23,6 @@ The repository contains three services:
 
 
 ## GraphQL services schema
-   ![Arrows - GraphQL Schema](https://github.com/xmlynek/Spring-boot-GraphQL-DGS-App/assets/70724986/041ca221-0dc6-47ca-8ae9-e79f83975edb)
+   ![Arrows - GraphQL services Schema](GraphQL-services-schema.png)
 
 
